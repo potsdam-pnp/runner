@@ -14,9 +14,9 @@ jobs:
           echo '  - nixos-rebuild switch --flake /etc/nixos' >> user-data.txt
           hcloud server create \
             --image ubuntu-22.04 \
-            --name runner
-            --type cx11
-            --without-ipv4
+            --name runner \
+            --type cx11 \
+            --without-ipv4 \
             --user-data-from-file user-data.txt
         env:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
