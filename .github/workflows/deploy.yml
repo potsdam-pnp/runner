@@ -1,0 +1,21 @@
+name: Deploy new runner machine
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    steps:
+      - uses: 3bit/setup-hcloud@v2
+      - run: |
+          echo '#cloud-config' > user-data.txt
+          echo 'runcmd:' >> user-data.txt
+          echo '  - curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect | PROVIDER=hetznercloud NIX_CHANNEL=nixos-22.05 bash -x 2>&1 | tee /tmp/infect.log' >> user-data.txt
+          echo '  - cd /etc/nixos/ && curl "https://github.com/potsdam-pnp/runner/archive/refs/heads/main.tar.gz" | tar zxvf - --strip 1' >> user-data.txt
+          echo '  - nixos-rebuild switch --flake /etc/nixos' >> user-data.txt
+          hcloud server create \
+            --image ubuntu-22.04 \
+            --name runner
+            --type cx11
+            --without-ipv4
+            --user-data-from-file user-data.txt
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
