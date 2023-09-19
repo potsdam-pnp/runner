@@ -17,6 +17,7 @@ jobs:
             --name runner \
             --type cx11 \
             --without-ipv4 \
+            --ssh-key default-ssh-key \
             --user-data-from-file user-data.txt
         env:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
