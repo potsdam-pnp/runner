@@ -9,7 +9,7 @@ write_files:
             prefixLength = 64;
           }];
         };
-        defaultGateway6 = {
+        networking.defaultGateway6 = {
           address = "fe80::1";
           interface = "eth0";
         };
