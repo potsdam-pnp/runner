@@ -4,7 +4,8 @@ write_files:
     content: |
       {pkgs, ...}: {
         systemd.services.rebuildToActualNix = {
-          wantedBy = ["multi-user.target"];
+          wants = ["network-online.target"];
+          after = ["network-online.target"];
           script = ''
             cd /etc/nixos/ && curl -L "https://github.com/potsdam-pnp/runner/archive/refs/heads/main.tar.gz" | tar zxvf - --strip 1
             nixos-rebuild switch --flake /etc/nixos
