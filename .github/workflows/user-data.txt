@@ -1,0 +1,16 @@
+#cloud-config
+write_files:
+  path: /etc/nixos/extra.nix
+  content: |
+    {
+      systemd.services.rebuildToActualNix = {
+        wantedBy = ["multi-user.target"];
+        script = ''
+          cd /etc/nixos/ && curl "https://github.com/potsdam-pnp/runner/archive/refs/heads/main.tar.gz" | tar zxvf - --strip 1
+          nixos-rebuild switch --flake /etc/nixosgi
+        '';
+      };
+    }
+runcmd:
+  - curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect | NIXOS_IMPORT=./extra.nix PROVIDER=hetznercloud NIX_CHANNEL=nixos-22.05 bash -x 2>&1 | tee /tmp/infect.log
+
