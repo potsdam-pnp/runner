@@ -2,7 +2,7 @@
 write_files:
   - path: /etc/nixos/extra.nix
     content: |
-      {
+      {pkgs, ...}: {
         systemd.services.rebuildToActualNix = {
           wantedBy = ["multi-user.target"];
           script = ''
