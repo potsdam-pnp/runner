@@ -6,9 +6,10 @@ write_files:
         systemd.services.rebuildToActualNix = {
           wantedBy = ["multi-user.target"];
           script = ''
-            cd /etc/nixos/ && ${pkgs.curl}/bin/curl -L "https://github.com/potsdam-pnp/runner/archive/refs/heads/main.tar.gz" | ${pkgs.gnutar}/bin/tar zxvf - --strip 1
+            cd /etc/nixos/ && curl -L "https://github.com/potsdam-pnp/runner/archive/refs/heads/main.tar.gz" | tar zxvf - --strip 1
             nixos-rebuild switch --flake /etc/nixos
           '';
+          path = [ pkgs.curl pkgs.gnutar pkgs.gzip pkgs.nixos-rebuild ];
         };
       }
 runcmd:
