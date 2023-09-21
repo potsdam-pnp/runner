@@ -7,9 +7,7 @@ jobs:
     steps:
       - uses: 3bit/setup-hcloud@v2
       - run: |
-          IP=$(ip -6 addr show dev eth0 scope global | grep inet6 | awk -F '[ \t]+|/' '{print $3}')
           curl https://raw.githubusercontent.com/potsdam-pnp/runner/main/.github/workflows/user-data.txt > user-data.txt
-          sed -i "s/%IP/$IP/"
           hcloud server create \
             --image ubuntu-22.04 \
             --name runner \

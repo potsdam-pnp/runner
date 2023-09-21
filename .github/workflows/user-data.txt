@@ -26,5 +26,6 @@ write_files:
         };
       }
 runcmd:
+  - IP=$(ip -6 addr show dev eth0 scope global | grep inet6 | awk -F '[ \t]+|/' '{print $3}')
+  - sed -i "s/%IP/$IP/" /etc/nixos/extra.nix
   - curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect | NIXOS_IMPORT=./extra.nix PROVIDER=hetznercloud NIX_CHANNEL=nixos-22.05 bash -x 2>&1 | tee /tmp/infect.log
-
