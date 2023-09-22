@@ -9,7 +9,7 @@ jobs:
       - name: Delete runner if existing
         run: |
           hcloud server delete runner
-          if !$?; then echo "Deleting runner failed"; fi
+          if [[ !$? ]]; then echo "Deleting runner failed"; fi
         env:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
 
