@@ -7,9 +7,7 @@ jobs:
     steps:
       - uses: 3bit/setup-hcloud@v2
       - name: Delete runner if existing
-        run: |
-          hcloud server delete runner
-          if [[ !$? ]]; then echo "Deleting runner failed"; fi
+        run: if hcloud server delete runner; then echo; else echo "Error in command to delete server"; fi
         env:
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
 
