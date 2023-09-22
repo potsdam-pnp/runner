@@ -3,7 +3,7 @@
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs";
 
   outputs = {self, nixpkgs, nixpkgs-unstable }: {
-    nixosConfigurations.runner = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.runner = nixpkgs-unstable.lib.nixosSystem {
       system = "x86_64-linux";
 
       modules = [ ./configuration.nix ./runner.nix {
@@ -11,7 +11,6 @@
         nixpkgs.config.permittedInsecurePackages = [
           "nodejs-16.20.2"
         ];
-        services.github-runner.package = nixpkgs-unstable.legacyPackages.x86_64-linux.github-runner;
       }];
     };
   };
