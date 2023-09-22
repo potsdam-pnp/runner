@@ -5,7 +5,11 @@
     tokenFile = builtins.toFile "tok" "AACWRH3HQMTGR6P5TPAXRVLFBVSNA"; 
     nodeRuntimes = [ "node16" "node20" ];
   };
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    substituters = [ "https://potsdam-pnp.cachix.org/" ];
+    trusted-public-keys = [ "potsdam-pnp.cachix.org-1:ZbQQiYz7KI9iZLOwECW6ErfJLFowbVOrNUF7PXJGLhw=" ];
+  };
   nixpkgs.config.permittedInsecurePackages = [
     "nodejs-16.20.2"
   ];
