@@ -6,7 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: 3bit/setup-hcloud@v2
-      - run: |
+      - name: Delete runner if existing
+        run: |
+          hcloud server delete runner
+          if !$?; then echo "Deleting runner failed"; fi
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+
+      - name: Deploy new runner
+        run: |
           curl https://raw.githubusercontent.com/potsdam-pnp/runner/main/.github/workflows/user-data.txt > user-data.txt
           hcloud server create \
             --image ubuntu-22.04 \
