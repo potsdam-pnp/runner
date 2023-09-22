@@ -15,4 +15,4 @@ write_files:
         };
       }
 runcmd:
-  - curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect | NIXOS_IMPORT=./extra.nix PROVIDER=hetznercloud NIX_CHANNEL=nixos-22.05 bash -x 2>&1 | tee /tmp/infect.log
+  - curl https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect | NIXOS_IMPORT=./extra.nix PROVIDER=hetznercloud NIX_CHANNEL=nixos-23.05 bash -x 2>&1 | tee /tmp/infect.log
