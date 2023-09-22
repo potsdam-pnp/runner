@@ -6,12 +6,7 @@
     nixosConfigurations.runner = nixpkgs-unstable.lib.nixosSystem {
       system = "x86_64-linux";
 
-      modules = [ ./configuration.nix ./runner.nix {
-        nix.settings.experimental-features = [ "nix-command" "flakes" ];
-        nixpkgs.config.permittedInsecurePackages = [
-          "nodejs-16.20.2"
-        ];
-      }];
+      modules = [ ./configuration.nix ./runner.nix ]
     };
   };
 }
