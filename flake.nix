@@ -6,7 +6,7 @@
     nixosConfigurations.runner = nixpkgs-unstable.lib.nixosSystem {
       system = "x86_64-linux";
 
-      modules = [ ./configuration.nix ./runner.nix ]
+      modules = [ ./configuration.nix ./runner.nix ];
     };
   };
 }
