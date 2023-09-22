@@ -9,7 +9,18 @@ write_files:
           wantedBy = ["multi-user.target"];
           script = ''
             cd /etc/nixos/ && curl -L "https://github.com/potsdam-pnp/runner/archive/refs/heads/main.tar.gz" | tar zxvf - --strip 1
-            nixos-rebuild switch --flake /etc/nixos
+            nixos-rebuild boot --flake /etc/nixos
+            echo "Finished updating"
+            current=$(readlink /run/booted-system)
+            next=$(readlink /nix/var/nix/profiles/$(readlink /nix/var/nix/profiles/system))
+            echo Current: $current
+            echo Next: $next
+            if [ $current != $next ]; then
+              echo Rebbot
+              reboot
+            else
+              echo Not rebooting, as next is same as current
+            fi
           '';
           path = [ pkgs.curl pkgs.gnutar pkgs.gzip pkgs.nixos-rebuild ];
         };
